@@ -36,9 +36,9 @@ func TestRegisterUser(wg *sync.WaitGroup, index int, errCount *int32) {
 	defer wg.Done() // 在函数返回时通知 WaitGroup 当前协程已完成
 
 	param := &proto.RegisterRequest{
-		Username: "xurulai",
-		Password: "sz12345",
-		Email:    "2535512841@qq.com",
+		Username: "agiao",
+		Password: "sz123456",
+		Email:    "2535512842@qq.com",
 	}
 
 	start := time.Now()                                       // 记录调用开始时间

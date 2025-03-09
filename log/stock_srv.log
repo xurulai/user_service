@@ -10,3 +10,9 @@
 {"level":"ERROR","time":"2025-03-09T16:32:35.382+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
 {"level":"ERROR","time":"2025-03-09T16:32:35.382+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
 {"level":"ERROR","time":"2025-03-09T16:32:35.383+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
+{"level":"INFO","time":"2025-03-09T17:02:56.319+0800","caller":"logger/logger.go:42","msg":"init logger success"}
+{"level":"INFO","time":"2025-03-09T17:02:56.573+0800","caller":"user_service/main.go:92","msg":"rpc server start","ip":"127.0.0.1","port":8399}
+{"level":"ERROR","time":"2025-03-09T17:03:07.817+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
+{"level":"ERROR","time":"2025-03-09T17:03:07.817+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
+{"level":"ERROR","time":"2025-03-09T17:03:07.819+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
+{"level":"ERROR","time":"2025-03-09T17:03:07.820+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
