@@ -16,3 +16,13 @@
 {"level":"ERROR","time":"2025-03-09T17:03:07.817+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
 {"level":"ERROR","time":"2025-03-09T17:03:07.819+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
 {"level":"ERROR","time":"2025-03-09T17:03:07.820+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
+{"level":"INFO","time":"2025-03-09T22:18:22.985+0800","caller":"logger/logger.go:42","msg":"init logger success"}
+{"level":"ERROR","time":"2025-03-09T22:18:23.291+0800","caller":"user_service/main.go:86","msg":"Failed to register service to Consul","error":"Put \"http://127.0.0.1:8500/v1/agent/service/register\": dial tcp 127.0.0.1:8500: connectex: No connection could be made because the target machine actively refused it."}
+{"level":"INFO","time":"2025-03-09T22:20:42.001+0800","caller":"logger/logger.go:42","msg":"init logger success"}
+{"level":"INFO","time":"2025-03-09T22:20:42.245+0800","caller":"user_service/main.go:92","msg":"rpc server start","ip":"127.0.0.1","port":8399}
+{"level":"ERROR","time":"2025-03-09T22:20:57.655+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
+{"level":"ERROR","time":"2025-03-09T22:20:57.656+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
+{"level":"ERROR","time":"2025-03-09T22:20:57.657+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
+{"level":"ERROR","time":"2025-03-09T22:20:57.658+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
+{"level":"INFO","time":"2025-03-10T13:01:10.792+0800","caller":"logger/logger.go:42","msg":"init logger success"}
+{"level":"INFO","time":"2025-03-10T13:01:11.099+0800","caller":"user_service/main.go:92","msg":"rpc server start","ip":"127.0.0.1","port":8399}

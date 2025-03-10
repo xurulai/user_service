@@ -36,9 +36,9 @@ func TestRegisterUser(wg *sync.WaitGroup, index int, errCount *int32) {
 	defer wg.Done() // 在函数返回时通知 WaitGroup 当前协程已完成
 
 	param := &proto.RegisterRequest{
-		Username: "agiao",
-		Password: "sz123456",
-		Email:    "2535512842@qq.com",
+		Username: "agiao2",
+		Password: "sz1234567",
+		Email:    "2535512843@qq.com",
 	}
 
 	start := time.Now()                                       // 记录调用开始时间
@@ -52,6 +52,27 @@ func TestRegisterUser(wg *sync.WaitGroup, index int, errCount *int32) {
 		fmt.Printf("协程 %d: 调用用户注册接口成功: %+v, 耗时: %v\n", index, resp, duration)
 	}
 }
+// 测试用户登录接口的函数
+func TestLoginUser(wg *sync.WaitGroup, index int, errCount *int32) {
+	defer wg.Done() // 在函数返回时通知 WaitGroup 当前协程已完成
+
+	// 定义登录请求参数
+	param := &proto.LoginRequest{
+		Username: "agiao2",
+		Password: "sz1234567",
+	}
+
+	start := time.Now()                                     // 记录调用开始时间
+	resp, err := client.Login(context.Background(), param) // 调用 gRPC 服务的用户登录接口
+	duration := time.Since(start)                           // 计算调用耗时
+
+	if err != nil {
+		atomic.AddInt32(errCount, 1) // 如果发生错误，原子操作增加错误计数
+		fmt.Printf("协程 %d: 调用用户登录接口失败: %v, 耗时: %v\n", index, err, duration)
+	} else {
+		fmt.Printf("协程 %d: 调用用户登录接口成功: %+v, 耗时: %v\n", index, resp, duration)
+	}
+}
 
 func main() {
 	defer conn.Close()     // 程序退出时关闭 gRPC 连接
@@ -62,7 +83,8 @@ func main() {
 	for i := 0; i < 5; i++ { // 启动 5 组并发测试
 		wg.Add(1) // 每组并发调用 1 个注册接口
 
-		go TestRegisterUser(&wg, i, &errCount) // 启动协程测试用户注册接口
+		//go TestRegisterUser(&wg, i, &errCount) // 启动协程测试用户注册接口
+		go TestLoginUser(&wg,i,&errCount)
 	}
 	wg.Wait()                                             // 等待所有协程完成
 	fmt.Printf("总错误数: %d\n", atomic.LoadInt32(&errCount)) // 输出总错误数

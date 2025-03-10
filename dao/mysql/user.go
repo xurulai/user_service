@@ -39,3 +39,13 @@ func RegisterUser(ctx context.Context, username, password, email string) error {
 
 	return nil // 操作成功，返回 nil
 }
+
+// GetUserByUsername 根据用户名获取用户信息
+func GetUserByUsername(ctx context.Context, username string) (*model.User, error) {
+	var user model.User
+	result := db.WithContext(ctx).Where("username = ?", username).First(&user)
+	if result.Error != nil {
+		return nil, errno.ErrUserNotExisted
+	}
+	return &user, nil
+}

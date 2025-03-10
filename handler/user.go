@@ -35,3 +35,23 @@ func (u *UserSrv) Register(ctx context.Context, req *proto.RegisterRequest) (*pr
 
 	return response, nil // 返回空响应，表示操作成功
 }
+
+// Login 用户登录
+func (u *UserSrv) Login(ctx context.Context, req *proto.LoginRequest) (*proto.LoginResponse, error) {
+	fmt.Println("in Login ... ") // 打印进入方法的日志
+
+	// 参数处理
+	if req.GetUsername() == "" || req.GetPassword() == "" {
+		// 无效的请求
+		return nil, status.Error(codes.InvalidArgument, "请求参数有误") // 返回 gRPC 的 InvalidArgument 错误
+	}
+
+	// 业务处理
+	response, err := user.Login(ctx, req.Username, req.Password)
+	if err != nil {
+		zap.L().Error("user.Login failed", zap.Error(err)) // 记录错误日志
+		return response, status.Error(codes.Internal, "内部错误") // 返回 gRPC 的 Internal 错误
+	}
+
+	return response, nil // 返回空响应，表示操作成功
+}
