@@ -11,6 +11,9 @@ service UserService {
 
     // 用户登录
     rpc Login (LoginRequest) returns (LoginResponse);
+
+    // 刷新Token
+    rpc RefreshToken (RefreshTokenRequest) returns (RefreshTokenResponse);
 }
 
 // 注册请求
@@ -37,4 +40,19 @@ message LoginResponse {
     bool success = 1;       // 登录是否成功
     string message = 2;     // 返回信息
     string token = 3;       // 登录成功后的认证Token（可选）
+    string refreshtoken = 4; //登录成功后的刷新token
+}
+
+// 刷新Token请求
+message RefreshTokenRequest {
+    string refresh_token = 1;
+    string 
+}
+
+// 刷新Token响应
+message RefreshTokenResponse {
+    bool success = 1;
+    string message = 2;
+    string access_token = 3;
+    string refresh_token = 4;
 }

@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"time"
 	"user_service/dao/mysql"
 	"user_service/proto"
 	"user_service/third_party/jwt"
@@ -58,7 +59,7 @@ func Login(ctx context.Context, username string, password string) (*proto.LoginR
 	}
 
 	// 密码正确，生成 JWT Token
-	tokenString, err := jwt.GenToken(user.ID, user.Username)
+	tokenString, err := jwt.GenToken(user.ID, user.Username, 30*time.Minute)
 	if err != nil {
 		return &proto.LoginResponse{
 			Success: false,
@@ -66,10 +67,19 @@ func Login(ctx context.Context, username string, password string) (*proto.LoginR
 		}, status.Error(codes.Internal, "内部错误")
 	}
 
+	refreshToken, err := jwt.GenToken(user.ID, user.Username, 7*24*time.Hour)
+	if err != nil {
+		return &proto.LoginResponse{
+			Success: false,
+			Message: "生成刷新Token失败",
+		}, status.Error(codes.Internal, "内部错误")
+	}
+
 	// 返回登录成功响应
 	return &proto.LoginResponse{
-		Success: true,
-		Message: "登录成功",
-		Token:   tokenString,
+		Success:      true,
+		Message:      "登录成功",
+		Token:        tokenString,
+		Refreshtoken: refreshToken,
 	}, nil
 }

@@ -26,3 +26,5 @@
 {"level":"ERROR","time":"2025-03-09T22:20:57.658+0800","caller":"handler/user.go:32","msg":"user.Register failed","error":"rpc error: code = Internal desc = 内部错误"}
 {"level":"INFO","time":"2025-03-10T13:01:10.792+0800","caller":"logger/logger.go:42","msg":"init logger success"}
 {"level":"INFO","time":"2025-03-10T13:01:11.099+0800","caller":"user_service/main.go:92","msg":"rpc server start","ip":"127.0.0.1","port":8399}
+{"level":"INFO","time":"2025-03-10T15:13:13.808+0800","caller":"logger/logger.go:42","msg":"init logger success"}
+{"level":"INFO","time":"2025-03-10T15:13:14.110+0800","caller":"user_service/main.go:92","msg":"rpc server start","ip":"127.0.0.1","port":8399}
