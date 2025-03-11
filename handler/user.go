@@ -23,13 +23,13 @@ func (u *UserSrv) Register(ctx context.Context, req *proto.RegisterRequest) (*pr
 	fmt.Println("in CreateOrder ... ") // 打印进入方法的日志
 
 	// 参数处理
-	if req.GetUsername() == "" || req.GetPassword() == "" || req.GetEmail() == "" {
+	if req.GetUsername() == "" || req.GetPassword() == "" || req.GetEmail() == "" || req.GetPhone() == "" {
 		// 无效的请求
 		return nil, status.Error(codes.InvalidArgument, "请求参数有误") // 返回 gRPC 的 InvalidArgument 错误
 	}
 
 	// 业务处理
-	response, err := user.Register(ctx, req.Username, req.Password, req.Email)
+	response, err := user.Register(ctx, req.Username, req.Password, req.Email,req.Phone)
 	if err != nil {
 		zap.L().Error("user.Register failed", zap.Error(err)) // 记录错误日志
 		return response, status.Error(codes.Internal, "内部错误") // 返回 gRPC 的 Internal 错误
@@ -94,4 +94,45 @@ func (u *UserSrv) RefreshToken(ctx context.Context, req *proto.RefreshTokenReque
 		AccessToken:  newAccessToken,
 		RefreshToken: newRefreshToken,
 	}, nil
+}
+
+// SendSmsCode 发送短信验证码
+// SendSmsCode 发送短信验证码
+func (u *UserSrv) SendSmsCode(ctx context.Context, req *proto.SendSmsCodeRequest) (*proto.SendSmsCodeResponse, error) {
+    fmt.Println("in SendSmsCode ... ") // 打印进入方法的日志
+
+    // 参数处理
+    if req.GetPhone() == "" {
+        // 无效的请求
+        return nil, status.Error(codes.InvalidArgument, "请求参数有误") // 返回 gRPC 的 InvalidArgument 错误
+    }
+
+    // 业务处理
+    response, err := user.SendSmsCode(ctx, req.Phone)
+    if err != nil {
+        zap.L().Error("user.SendSmsCode failed", zap.Error(err)) // 记录错误日志
+        return response, status.Error(codes.Internal, "内部错误") // 返回 gRPC 的 Internal 错误
+    }
+
+    return response, nil // 返回响应
+}
+
+// LoginBySms 短信验证码登录
+func (u *UserSrv) LoginBySms(ctx context.Context, req *proto.LoginBySmsRequest) (*proto.LoginResponse, error) {
+    fmt.Println("in LoginBySms ... ") // 打印进入方法的日志
+
+    // 参数处理
+    if req.GetPhone() == "" || req.GetSmsCode() == "" {
+        // 无效的请求
+        return nil, status.Error(codes.InvalidArgument, "请求参数有误") // 返回 gRPC 的 InvalidArgument 错误
+    }
+
+    // 业务处理
+    response, err := user.LoginBySms(ctx, req.Phone, req.SmsCode)
+    if err != nil {
+        zap.L().Error("user.LoginBySms failed", zap.Error(err)) // 记录错误日志
+        return response, status.Error(codes.Internal, "内部错误") // 返回 gRPC 的 Internal 错误
+    }
+
+    return response, nil // 返回响应
 }

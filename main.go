@@ -9,6 +9,7 @@ import (
 	"syscall"
 	"user_service/config"
 	"user_service/dao/mysql"
+	"user_service/dao/redis"
 	"user_service/handler"
 	"user_service/logger"
 	"user_service/proto"
@@ -44,6 +45,12 @@ func main() {
 	err = mysql.Init(config.Conf.MySQLConfig)
 	if err != nil {
 		panic(err) // 如果初始化 MySQL 数据库失败，直接退出程序
+	}
+
+	// 4.初始化 Redis 连接
+	err = redis.Init(config.Conf.RedisConfig)
+	if err != nil {
+		panic(err) // 如果初始化 Redis 失败，直接退出程序
 	}
 
 	// 6. 初始化snowflake

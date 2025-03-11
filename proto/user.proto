@@ -12,8 +12,14 @@ service UserService {
     // 用户登录
     rpc Login (LoginRequest) returns (LoginResponse);
 
+    // 用户短信验证码登录
+    rpc LoginBySms (LoginBySmsRequest) returns (LoginResponse);
+
     // 刷新Token
     rpc RefreshToken (RefreshTokenRequest) returns (RefreshTokenResponse);
+
+    // 发送短信验证码
+    rpc SendSmsCode (SendSmsCodeRequest) returns (SendSmsCodeResponse);
 }
 
 // 注册请求
@@ -21,6 +27,7 @@ message RegisterRequest {
     string username = 1; // 用户名
     string password = 2; // 密码
     string email = 3;    // 邮箱
+    string phone = 4;    //电话号码
 }
 
 // 注册响应
@@ -35,6 +42,12 @@ message LoginRequest {
     string password = 2; // 密码
 }
 
+//用手机验证码登录
+message LoginBySmsRequest {
+    string phone = 1;
+    string sms_code = 2;
+}
+
 // 登录响应
 message LoginResponse {
     bool success = 1;       // 登录是否成功
@@ -43,10 +56,8 @@ message LoginResponse {
     string refreshtoken = 4; //登录成功后的刷新token
 }
 
-// 刷新Token请求
 message RefreshTokenRequest {
     string refresh_token = 1;
-    string 
 }
 
 // 刷新Token响应
@@ -55,4 +66,15 @@ message RefreshTokenResponse {
     string message = 2;
     string access_token = 3;
     string refresh_token = 4;
+}
+
+//发送验证码请求
+message SendSmsCodeRequest {
+    string phone = 1;
+}
+
+//响应验证码登录
+message SendSmsCodeResponse {
+    bool success = 1;
+    string message = 2;
 }
