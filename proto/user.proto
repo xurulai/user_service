@@ -4,6 +4,9 @@ package proto;
 
 option go_package = ".;proto";
 
+// 导入google/api/annotations.proto
+import "google/api/annotations.proto";
+
 // 用户服务
 service UserService {
     // 用户注册
