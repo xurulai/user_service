@@ -129,9 +129,9 @@ func main() {
 		wg.Add(1) // 每组并发调用 1 个注册接口
 
 		//go TestRegisterUser(&wg, i, &errCount) // 启动协程测试用户注册接口
-		//go TestLoginUser(&wg,i,&errCount)
+		go TestLoginUser(&wg,i,&errCount)
 		//go TestSendSmsCode(&wg,i,&errCount)
-		go TestLoginBySms(&wg, i, &errCount)
+		//go TestLoginBySms(&wg, i, &errCount)
 	}
 	wg.Wait()                                             // 等待所有协程完成
 	fmt.Printf("总错误数: %d\n", atomic.LoadInt32(&errCount)) // 输出总错误数

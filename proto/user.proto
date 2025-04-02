@@ -1,11 +1,9 @@
 syntax = "proto3";
 
-package proto;
+option go_package = ".;proto";  // 指定生成的 Go 代码所在的包路径
 
-option go_package = ".;proto";
+package proto;  // 定义当前文件的包名，用于避免命名冲突
 
-// 导入google/api/annotations.proto
-import "google/api/annotations.proto";
 
 // 用户服务
 service UserService {

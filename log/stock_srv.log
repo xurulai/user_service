@@ -110,3 +110,13 @@
 {"level":"ERROR","time":"2025-03-11T15:48:36.218+0800","caller":"handler/user.go:133","msg":"user.LoginBySms failed","error":"验证码不存在或已过期"}
 {"level":"ERROR","time":"2025-03-11T15:48:36.220+0800","caller":"handler/user.go:133","msg":"user.LoginBySms failed","error":"验证码不存在或已过期"}
 {"level":"ERROR","time":"2025-03-11T15:48:36.222+0800","caller":"handler/user.go:133","msg":"user.LoginBySms failed","error":"验证码不存在或已过期"}
+{"level":"INFO","time":"2025-04-02T12:22:56.965+0800","caller":"logger/logger.go:42","msg":"init logger success"}
+{"level":"INFO","time":"2025-04-02T12:22:57.314+0800","caller":"user_service/main.go:99","msg":"rpc server start","ip":"127.0.0.1","port":8399}
+{"level":"INFO","time":"2025-04-02T12:24:03.084+0800","caller":"logger/logger.go:42","msg":"init logger success"}
+{"level":"INFO","time":"2025-04-02T12:24:03.139+0800","caller":"user_service/main.go:99","msg":"rpc server start","ip":"127.0.0.1","port":8399}
+{"level":"INFO","time":"2025-04-02T12:26:04.420+0800","caller":"logger/logger.go:42","msg":"init logger success"}
+{"level":"INFO","time":"2025-04-02T12:26:04.473+0800","caller":"user_service/main.go:99","msg":"rpc server start","ip":"127.0.0.1","port":8399}
+{"level":"INFO","time":"2025-04-02T12:28:12.368+0800","caller":"logger/logger.go:42","msg":"init logger success"}
+{"level":"INFO","time":"2025-04-02T12:28:12.433+0800","caller":"user_service/main.go:99","msg":"rpc server start","ip":"127.0.0.1","port":8399}
+{"level":"INFO","time":"2025-04-02T12:32:32.433+0800","caller":"logger/logger.go:42","msg":"init logger success"}
+{"level":"INFO","time":"2025-04-02T12:32:32.617+0800","caller":"user_service/main.go:99","msg":"rpc server start","ip":"127.0.0.1","port":8399}
