@@ -11,6 +11,7 @@ import (
 
 	"google.golang.org/grpc"                      // 导入 gRPC 包
 	"google.golang.org/grpc/credentials/insecure" // 导入用于不安全连接的 gRPC 凭证包
+	"google.golang.org/grpc/metadata"
 )
 
 var (
@@ -42,8 +43,10 @@ func TestRegisterUser(wg *sync.WaitGroup, index int, errCount *int32) {
 		Phone:    "1380013800",
 	}
 
+	// 创建带有终端信息的上下文
+	ctx :=metadata.AppendToOutgoingContext(context.Background(), "terminal", "pc")
 	start := time.Now()                                       // 记录调用开始时间
-	resp, err := client.Register(context.Background(), param) // 调用 gRPC 服务的用户注册接口
+	resp, err := client.Register(ctx, param) // 调用 gRPC 服务的用户注册接口
 	duration := time.Since(start)                             // 计算调用耗时
 
 	if err != nil {
@@ -107,8 +110,11 @@ func TestLoginBySms(wg *sync.WaitGroup, index int, errCount *int32) {
 		SmsCode: "123456789",     // 测试验证码
 	}
 
+	// 创建带有终端信息的上下文
+	ctx := metadata.AppendToOutgoingContext(context.Background(), "terminal", "mobile")
+
 	start := time.Now()                                         // 记录调用开始时间
-	resp, err := client.LoginBySms(context.Background(), param) // 调用 gRPC 服务的短信验证码登录接口
+	resp, err := client.LoginBySms(ctx, param) // 调用 gRPC 服务的短信验证码登录接口
 	duration := time.Since(start)                               // 计算调用耗时
 
 	if err != nil {
@@ -126,12 +132,12 @@ func main() {
 
 	// 并发调用测试接口
 	for i := 0; i < 5; i++ { // 启动 5 组并发测试
-		wg.Add(1) // 每组并发调用 1 个注册接口
+		wg.Add(2) // 每组并发调用 1 个注册接口
 
 		//go TestRegisterUser(&wg, i, &errCount) // 启动协程测试用户注册接口
 		go TestLoginUser(&wg,i,&errCount)
 		//go TestSendSmsCode(&wg,i,&errCount)
-		//go TestLoginBySms(&wg, i, &errCount)
+		go TestLoginBySms(&wg, i, &errCount)
 	}
 	wg.Wait()                                             // 等待所有协程完成
 	fmt.Printf("总错误数: %d\n", atomic.LoadInt32(&errCount)) // 输出总错误数

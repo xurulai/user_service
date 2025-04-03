@@ -72,8 +72,9 @@ func (u *UserSrv) RefreshToken(ctx context.Context, req *proto.RefreshTokenReque
 	// 根据用户ID重新生成新的 Access Token 和 Refresh Token
 	userID := claims.UserID // 直接访问结构体字段
 	username := claims.Username
+	terminal := claims.Terminal
 
-	newAccessToken, err := jwt.GenToken(int64(userID), username, 30*time.Minute)
+	newAccessToken, err := jwt.GenToken(int64(userID), username, 30*time.Minute,terminal)
 	if err != nil {
 		return &proto.RefreshTokenResponse{
 			Success: false,
@@ -81,7 +82,7 @@ func (u *UserSrv) RefreshToken(ctx context.Context, req *proto.RefreshTokenReque
 		}, status.Error(codes.Internal, "内部错误")
 	}
 
-	newRefreshToken, err := jwt.GenToken(int64(userID), username, 7*24*time.Hour)
+	newRefreshToken, err := jwt.GenToken(int64(userID), username, 7*24*time.Hour,terminal)
 	if err != nil {
 		return &proto.RefreshTokenResponse{
 			Success: false,

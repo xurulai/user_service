@@ -59,6 +59,7 @@ message LoginResponse {
 
 message RefreshTokenRequest {
     string refresh_token = 1;
+    string terminal = 2;
 }
 
 // 刷新Token响应

@@ -11,6 +11,7 @@ import (
 	"user_service/third_party/jwt"
 
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 )
 
@@ -60,9 +61,10 @@ func Login(ctx context.Context, username string, password string) (*proto.LoginR
 			Message: "用户名或密码错误",
 		}, status.Error(codes.Unauthenticated, "用户名或密码错误")
 	}
-
+	// 获取终端类型
+    terminal := getTerminalType(ctx)
 	// 密码正确，生成 JWT Token
-	tokenString, err := jwt.GenToken(user.ID, user.Username, 30*time.Minute)
+	tokenString, err := jwt.GenToken(user.ID, user.Username, 30*time.Minute,terminal)
 	if err != nil {
 		return &proto.LoginResponse{
 			Success: false,
@@ -70,7 +72,7 @@ func Login(ctx context.Context, username string, password string) (*proto.LoginR
 		}, status.Error(codes.Internal, "内部错误")
 	}
 
-	refreshToken, err := jwt.GenToken(user.ID, user.Username, 7*24*time.Hour)
+	refreshToken, err := jwt.GenToken(user.ID, user.Username, 7*24*time.Hour,terminal)
 	if err != nil {
 		return &proto.LoginResponse{
 			Success: false,
@@ -164,8 +166,11 @@ func LoginBySms(ctx context.Context, phone, smsCode string) (*proto.LoginRespons
 		}, err
 	}
 
+	// 获取终端类型
+    terminal := getTerminalType(ctx)
+
 	// 生成 JWT Token 并返回
-	accessToken, err := jwt.GenToken(user.ID, user.Username, 30*time.Minute)
+	accessToken, err := jwt.GenToken(user.ID, user.Username, 30*time.Minute,terminal)
 	if err != nil {
 		return &proto.LoginResponse{
 			Success: false,
@@ -173,7 +178,7 @@ func LoginBySms(ctx context.Context, phone, smsCode string) (*proto.LoginRespons
 		}, err
 	}
 
-	refreshToken, err := jwt.GenToken(user.ID, user.Username, 7*24*time.Hour)
+	refreshToken, err := jwt.GenToken(user.ID, user.Username, 7*24*time.Hour,terminal)
 	if err != nil {
 		return &proto.LoginResponse{
 			Success: false,
@@ -210,4 +215,14 @@ func verifySmsCode(ctx context.Context, phone, smsCode string) error {
 	}
 
 	return nil
+}
+
+// getTerminalType 获取终端类型
+func getTerminalType(ctx context.Context) string {
+    // 从上下文中获取终端类型（示例：通过元数据传递）
+    md, _ := metadata.FromIncomingContext(ctx)
+    if terminal, ok := md["terminal"]; ok && len(terminal) > 0 {
+        return terminal[0]
+    }
+    return "unknown"
 }

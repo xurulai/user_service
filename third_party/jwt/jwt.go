@@ -21,10 +21,11 @@ type MyClaims struct {
 	UserID   int64  `json:"user_id"`
 	Username string `json:"username"`
 	jwt.StandardClaims
+	Terminal string `json:"terminal"`
 }
 
 // GenToken 生成JWT
-func GenToken(userID int64, username string, expireTime time.Duration) (string, error) {
+func GenToken(userID int64, username string, expireTime time.Duration,terminal string) (string, error) {
 	// 创建一个我们自己的声明的数据
 	c := MyClaims{
 		UserID:   userID,
@@ -32,7 +33,10 @@ func GenToken(userID int64, username string, expireTime time.Duration) (string, 
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(expireTime).Unix(), // 使用传入的过期时间
 			Issuer:    "bluebell",                        // 签发人
+			
 		},
+		Terminal: terminal,   //添加终端信息
+		
 	}
 	// 使用指定的签名方法创建签名对象
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)
